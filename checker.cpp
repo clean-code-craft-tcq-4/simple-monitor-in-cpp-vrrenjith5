@@ -12,18 +12,30 @@ bool isBatteryTemperatureOk(float temperature);
 bool isBatteryStateOfChargeOk(float soc);
 bool isBatteryChargeRateOk(float chargeRate);
 
-static inline bool isLessThanOrEqual(float firstValue, float secondValue){
- return ((firstValue <= secondValue)?(true):(false));
+static inline bool isLessThanOrEqual(float value, float boundary){
+ bool result = ((value <= boundary)?(true):(false));
+ if (!result){
+   cout<<"value is greater than boundary"<<endl;
+ }
+ return result;
+}
+
+static inline bool isGreaterThanOrEqual(float value, float boundary){
+ bool result = ((value >= boundary)?(true):(false));
+ if (!result){
+   cout<<"value is less than boundary"<<endl;
+ }
+ return result;
 }
 
 static inline bool isInRange(float value, float lowerBoundary, float upperBoundary){
- return (isLessThanOrEqual(lowerBoundary, value) && isLessThanOrEqual(value, upperBoundary));
+ return (isLessThanOrEqual(value, upperBoundary) && isGreaterThanOrEqual(value, lowerBoundary));
 }
 
 bool isBatteryTemperatureOk(float temperature){
  bool result = isInRange(temperature, TEMPERATURE_LOWER_BOUNDARY, TEMPERATURE_UPPER_BOUNDARY);
  if(!result) {
-   cout << "Temperature out of range!\n";
+   cout << "Temperature "<<temperature<< " is out of range!"<<endl;
  }
  return result;
 }
@@ -31,7 +43,7 @@ bool isBatteryTemperatureOk(float temperature){
 bool isBatteryStateOfChargeOk(float soc){
  bool result = isInRange(soc, SOC_LOWER_BOUNDARY, SOC_UPPER_BOUNDARY);
  if(!result) {
-   cout << "State of Charge out of range!\n";
+   cout << "State of Charge "<<soc<< " is out of range!"<<endl;
  }
  return result;
 }
@@ -39,7 +51,7 @@ bool isBatteryStateOfChargeOk(float soc){
 bool isBatteryChargeRateOk(float chargeRate){
   bool result = isLessThanOrEqual(chargeRate, CHARGE_RATE_BOUNDARY);
   if(!result) {
-    cout << "Charge Rate out of range!\n";
+    cout << "Charge Rate "<<chargeRate<< " is out of range!" <<endl;
   }
   return result;
 }
