@@ -1,43 +1,47 @@
 #include <assert.h>
 #include <iostream>
 
-#define TEMPERATURE_LOWER_BOUNDARY  (0)
-#define TEMPERATURE_UPPER_BOUNDARY  (45)
-#define SOC_LOWER_BOUNDARY          (20)
-#define SOC_UPPER_BOUNDARY          (80)
-const float CHARGE_RATE_BOUNDARY = 0.8;
-
 using namespace     std;
+const float TEMPERATURE_LOWER_BOUNDARY = 0;
+const float TEMPERATURE_UPPER_BOUNDARY = 45;
+const float SOC_LOWER_BOUNDARY = 20;
+const float SOC_UPPER_BOUNDARY = 80;
+const float CHARGE_RATE_BOUNDARY = 0.8;
 
 bool isBatteryTemperatureOk(float temperature);
 bool isBatteryStateOfChargeOk(float soc);
 bool isBatteryChargeRateOk(float chargeRate);
 
+static inline bool isLessThanOrEqual(float firstValue, float secondValue){
+ return ((firstValue <= secondValue)?(true):(false));
+}
+
+static inline bool isInRange(float value, float lowerBoundary, float upperBoundary){
+ return (isLessThanOrEqual(lowerBoundary, value) && isLessThanOrEqual(value, upperBoundary));
+}
+
 bool isBatteryTemperatureOk(float temperature){
-  bool temperatureReturn = true;
-  if((temperature < TEMPERATURE_LOWER_BOUNDARY) || (temperature > TEMPERATURE_UPPER_BOUNDARY)) {
-    cout << "Temperature out of range!\n";
-    temperatureReturn = false;
-  }
-  return temperatureReturn;
+ bool result = isInRange(temperature, TEMPERATURE_LOWER_BOUNDARY, TEMPERATURE_UPPER_BOUNDARY);
+ if(!result) {
+   cout << "Temperature out of range!\n";
+ }
+ return result;
 }
 
 bool isBatteryStateOfChargeOk(float soc){
-  bool socReturn = true;
-  if((soc < SOC_LOWER_BOUNDARY) || (soc > SOC_UPPER_BOUNDARY)) {
-    cout << "State of Charge out of range!\n";
-    socReturn = false;
-  }
-  return socReturn;
+ bool result = isInRange(soc, SOC_LOWER_BOUNDARY, SOC_UPPER_BOUNDARY);
+ if(!result) {
+   cout << "State of Charge out of range!\n";
+ }
+ return result;
 }
 
 bool isBatteryChargeRateOk(float chargeRate){
-  bool chargeRateReturn = true;
-  if(chargeRate > CHARGE_RATE_BOUNDARY) {
+  bool result = isLessThanOrEqual(chargeRate, CHARGE_RATE_BOUNDARY);
+  if(!result) {
     cout << "Charge Rate out of range!\n";
-    chargeRateReturn = false;
   }
-  return chargeRateReturn;
+  return result;
 }
 
 int main() {
