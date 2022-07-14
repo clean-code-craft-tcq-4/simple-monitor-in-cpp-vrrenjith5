@@ -4,23 +4,19 @@
 using namespace std;
 
 bool Comparison :: isLessThanOrEqual(float value, float boundary){
-  bool result = ((value <= boundary)?(true):(false));
-  return result;
+  return ((value <= boundary)?(true):(false));
 }
 
 bool Comparison :: isLessThan(float value, float boundary){
-  bool result = ((value < boundary)?(true):(false));
-  return result;
+  return ((value < boundary)?(true):(false));
 }
 
 bool Comparison :: isGreaterThan(float value, float boundary){
-  bool result = ((value > boundary)?(true):(false));
-  return result;
+  return ((value > boundary)?(true):(false));
 }
 
 bool Comparison :: isGreaterThanOrEqual(float value, float boundary){
-  bool result = ((value >= boundary)?(true):(false));
-  return result;
+  return ((value >= boundary)?(true):(false));
 }
 
 bool Comparison :: isWithInRange(float value, float lowerBoundary, float upperBoundary){
